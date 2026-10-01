@@ -1,0 +1,11 @@
+torch
+diffusers>=0.30
+transformers>=4.40
+accelerate
+safetensors
+pyyaml
+pillow
+numpy
+matplotlib
+# needed in later stages (not used in Stage 1):
+# scikit-image, scipy, pandas, lpips, scikit-learn

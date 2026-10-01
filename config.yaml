@@ -1,0 +1,25 @@
+# Prompt-Guided Latent Evaluation Model - configuration (Stage 1 keys; later stages extend this file)
+experiment:
+  name: stage1_sanity
+  seed: 42
+  output_dir: outputs/stage1
+
+diffusion:
+  model_id: stable-diffusion-v1-5/stable-diffusion-v1-5   # pretrained SD v1.5 weights (not trained here)
+  resolution: 512            # pixel height = width; latent size = resolution / 8
+  num_inference_steps: 30
+  guidance_scale: 7.5
+  batch_size: 1              # prompts processed per forward pass
+  dtype: auto                # auto -> float16 on CUDA, float32 on CPU
+  attention_slicing: true    # lowers peak GPU memory
+  vae_slicing: true
+  disable_safety_checker: true   # avoids black-image false positives and saves VRAM; set false if required
+
+prompts:
+  - "a photograph of a mountain lake at sunrise"
+  - "a close-up photo of a red vintage car on a city street"
+
+latent:
+  channels: 4
+  patch_size: 8              # used from Stage 2 onward; Stage 1 only checks divisibility
+  roundtrip_check: true      # re-encode decoded image with VAE and report latent mismatch
